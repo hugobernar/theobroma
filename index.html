@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portal de E-mail Corporativo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #1838a1;
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    header i {
+      margin-right: 10px;
+    }
+
+    .hero {
+      background: linear-gradient(to right, #1f3dcf, #2563eb);
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      color: #cbd5e1;
+    }
+
+    .search-container {
+      margin-top: -20px;
+      display: flex;
+      justify-content: center;
+      padding: 30px 20px;
+    }
+
+    .search-container input {
+      width: 100%;
+      max-width: 500px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    .email-list {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .email-item {
+      background: white;
+      border-radius: 8px;
+      padding: 15px 20px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .email-item strong {
+      font-size: 1rem;
+      color: #1f2937;
+    }
+
+    .email-item span {
+      color: #2563eb;
+      font-weight: 500;
+      font-size: 0.95rem;
+      word-break: break-all;
+    }
+
+    .no-result {
+      text-align: center;
+      color: #6b7280;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <i>📧</i> Portal de E-mail Corporativo
+  </header>
+
+  <section class="hero">
+    <div>
+      <i style="font-size: 48px;">📧</i>
+      <h1>Diretório de e-mail corporativo</h1>
+      <p>Encontre e conecte-se com nossa equipe por meio de nossas contas de e-mail corporativos oficiais.</p>
+    </div>
+  </section>
+
+  <section class="search-container">
+    <input type="text" id="searchInput" placeholder="Pesquisar contas de e-mail...">
+  </section>
+
+  <section class="email-list" id="emailList">
+    <!-- Lista será inserida via JS -->
+  </section>
+
+  <div class="no-result" id="noResult" style="display:none;">
+    Nenhuma conta de e-mail encontrada.
+  </div>
+
+  <script>
+    const emails = [
+      { setor: "Gabinete do Prefeito", email: "gabinetedoprefeito@theobroma.ro.gov.br" },
+      { setor: "Secretaria Municipal de Planejamento", email: "semplan@theobroma.ro.gov.br" },
+      { setor: "CPL – Comissão Permanente de Licitação", email: "supel@theobroma.ro.gov.br" },
+      { setor: "Assessoria Jurídical", email: "assessoriajurídica@theobroma.ro.gov.br" },
+      { setor: "Portal Transparência do Município", email: "portaltransparencia@theobroma.ro.gov.br" },
+      { setor: "Técnico de Informática", email: "ti@theobroma.ro.gov.br" },
+      { setor: "Departamento de Protocolo", email: "protocolo@theobroma.ro.gov.br" },
+      { setor: "Departamento de Cadastro Municipal", email: "cadastro@theobroma.ro.gov.br" },
+      { setor: "Departamento de Receita Municipal", email: "receita@theobroma.ro.gov.br" },
+      { setor: "Departamento de Recursos Humanos", email: "rh@theobroma.ro.gov.br" },
+      { setor: "Controladoria Interna", email: "controladoriainterna@theobroma.ro.gov.br" },
+      { setor: "Secretaria de Administração e Fazenda", email: "semaf@theobroma.ro.gov.br" },
+      { setor: "Departamento de Contabilidade Geral", email: "contabilidade@theobroma.ro.gov.br" },
+      { setor: "Departamento de Tesouraria", email: "tesouraria@theobroma.ro.gov.br" },
+      { setor: "Secretaria de Obras e Serviços Públicos", email: "semosp@theobroma.ro.gov.br" },
+      { setor: "Departamento de Prestação de Contas", email: "prestaçãodecontas@theobroma.ro.gov.br" },
+      { setor: "Departamento de Convênios", email: "convenios@theobroma.ro.gov.br" },
+      { setor: "Secretaria de Trabalho de Assistência Social", email: "semdas@theobroma.ro.gov.br" },
+      { setor: "Secretaria de Educação, Cultura e Esporte", email: "semece@theobroma.ro.gov.br" },
+      { setor: "Secretaria Municipal de Saúde", email: "semsau@theobroma.ro.gov.br" },
+      { setor: "Secretaria Municipal de Agricultura", email: "semagri@theobroma.ro.gov.br" },
+      { setor: "Secretaria Municipal de Meio Ambiente", email: "semma@theobroma.ro.gov.br" },
+      { setor: "Secretaria de Educação", email: "semed@theobroma.ro.gov.br" },
+      { setor: "Departamento de Engenharia", email: "engenharia@theobroma.ro.gov.br" },
+      { setor: "Departamento de Ouvidoria", email: "ouvidoriageral@theobroma.ro.gov.br" },
+      { setor: "Departamento de Gabinete", email: "compdec@theobroma.ro.gov.br" },
+      { setor: "Conselho Municipal dos Direitos da Criança e do Adolescente", email: "cmdca@theobroma.ro.gov.br" }
+    ];
+
+    const listContainer = document.getElementById("emailList");
+    const noResult = document.getElementById("noResult");
+    const searchInput = document.getElementById("searchInput");
+
+    function renderList(filter = "") {
+      listContainer.innerHTML = "";
+      const filtered = emails.filter(item => 
+        item.setor.toLowerCase().includes(filter.toLowerCase()) || 
+        item.email.toLowerCase().includes(filter.toLowerCase())
+      );
+
+      if (filtered.length === 0) {
+        noResult.style.display = "block";
+        return;
+      } else {
+        noResult.style.display = "none";
+      }
+
+      filtered.forEach(({ setor, email }) => {
+        const div = document.createElement("div");
+        div.className = "email-item";
+        div.innerHTML = `<strong>${setor}</strong><span>${email}</span>`;
+        listContainer.appendChild(div);
+      });
+    }
+
+    searchInput.addEventListener("input", () => {
+      renderList(searchInput.value);
+    });
+
+    // Renderiza inicialmente
+    renderList();
+  </script>
+</body>
+</html>
